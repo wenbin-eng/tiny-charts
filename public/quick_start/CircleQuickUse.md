@@ -120,11 +120,13 @@ chartIns.render();
 <template>
 	<tiny-tooltip pre :content="tipContent" placement="bottom" effect="light">
 		<div class="grid-card" :style="style">
-			<img v-if="iconPath" :src="iconPath" />
+			<img draggable="false" v-if="iconPath" :src="iconPath" />
 			<div class="text" :style="`bottom:${data.height / 2 }px`"> {{ data.text }}</div>
 		</div>
 	</tiny-tooltip>
 </template>
+
+<script  >
 import { Tooltip } from '@opentiny/vue'
 export default {
 	components: {
@@ -156,23 +158,20 @@ export default {
 		}
 		iconPath = icons[data.name];
 		if(data.name){
-			tipContent.push(`服务器名称：${data.name} \n`)
+			tipContent.push(`服务器名称：${data.name}`)
 		}
 		if(data.ip){
 			tipContent.push(`IP地址： ${data.ip}`)
 		}
-		if(!tipContent.length) {
-			tipContent = null;
+		if (data.iconPath) {
+			iconPath = data.iconPath;
 		}
 		return {
-      style: styleObject,
+			style: styleObject,
 			iconPath: iconPath,
-			tipContent: tipContent
-    }
-	},
+			tipContent: tipContent.join('\n')
+		}
+	}
 }
+</script>
 ```
-
-
-
-
