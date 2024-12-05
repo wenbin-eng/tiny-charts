@@ -241,7 +241,7 @@ export default class CoreChart extends BaseChart {
 
   // 监听全键盘事件
   keyboardFocus() {
-    const { keyboardFocus, theme } = this.iChartOption;
+    const { keyboardFocus, theme } = this.iChartOption || {};
     if (keyboardFocus) {
       if (this.wcagObserver) {
         this.wcagObserver.unobserve();
