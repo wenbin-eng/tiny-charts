@@ -21,6 +21,8 @@ export default class Animation {
   }
 
   grow(option) {
+    // 虚线不支持生长动效，stroke-dasharray属性会被覆盖
+    if(option.lineMode === 'dash') return;
     let path = option.path;
     let linePath = path.firstChild;
     linePath.setAttribute('style', '');

@@ -82,10 +82,14 @@ export default class Line {
     }
     attr(path, 'stroke-width', this.style.width + 'px');
     g.appendChild(path);
-    // 线动效需要1s的时间，延时生成箭头
-    setTimeout(() => {
+    // 线动效需要1s的时间，延时生成箭头(虚线无生长动效，无需延时生成箭头)
+    if (this.style.mode === 'dash') {
       this.creatMarker(path);
-    }, 1000);
+    }else{
+      setTimeout(() => {
+        this.creatMarker(path);
+      }, 1000);
+    }
     // 创建线的热区，便于hover、click触发
     this.createTriggerPath(path, g);
     // 创建tag标签

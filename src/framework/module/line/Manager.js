@@ -200,7 +200,8 @@ export default class LineManager {
     lineInstance.animation({
       type: 'grow',
       duration: this.RE_CREATE_TIME,
-      path
+      path,
+      lineMode: lineInstance.style?.mode
     });
   }
 
