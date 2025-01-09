@@ -3,7 +3,7 @@
 
 ## 1.渲染节点
 
-用户需要使用 React 组件节点时，需要引入`{{VITE_BASECOPYRIGHTSPAT}}/feature/react-node.js`，这个文件可以解析传入的 React 组件并渲染至图表中。
+用户需要使用 React 组件节点时，需要引入`{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/react-node.js`，这个文件可以解析传入的 React 组件并渲染至图表中。
 
 ### 创建 React 组件节点
 ```javascript
@@ -13,19 +13,9 @@ function App(props) {
   const style = {
     width: `${data.peopleNum}%`,
   }
-  const  dynamicBackgroundColor=()=>{
-    if (data.id.includes('root')) {
-      return { background: '#2070F3' };
-    } else if (data.id.includes('researchDept')) {
-      return {background:'#F4840C' };
-    } else if (data.id.includes('designDept')) {
-      return {background:'#09AA71' };
-    }
-    return {background:'#E02128' }; // 默认背景颜色
-  }
   return (
     <div className="mindmap-card" >
-      <div className="mindmap-top" style={ dynamicBackgroundColor() }>
+      <div className="mindmap-top">
         <p>{ data.text }</p>
       </div>
       <div className="mindmap-bottom">
@@ -45,16 +35,39 @@ export default App;
 ### 将 React 组件渲染至图表中
 将 React 组件传递给`option.component`属性，图表会使用data中对应的数据渲染节点。
 ```javascript
+// html片段
+<div id='dom'></div>
+```
+```javascript
+// javascript片段
 // 引用图表库
 import {MindmapChart} from '{{VITE_BASECOPYRIGHTSPAT}}';
 // 引用渲染依赖
-import '{{VITE_BASECOPYRIGHTSPAT}}/feature/react-node.js'
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/react-node.js'
 // 引用节点组件
 import Node from './Node.jsx';
 
 const option = {
   // 向图表中传入React组件，作为节点使用
   component: <Node />,
+  // 布局配置
+  layout: {
+    type: 'mindmap',
+    direction: 'LR',
+    nodeShape: 'rect',
+    vGap: 10,
+    hGap: 100,
+    bufferRender: true
+  },
+  // 节点配置
+  node: {
+    width: 200,
+    height: 100,
+  },
+  // 连线样式
+  line: {
+    type: 'Bezier'
+  },
   // 图表数据
   data: {
     id: 'root',
@@ -74,6 +87,8 @@ const option = {
     ]
   }
 };
+// 需在节点创建后，才可进行图表的创建
+const chartContainerDom = document.getElementById('dom')
 let chartIns = new MindmapChart();
 chartIns.init(chartContainerDom); 
 chartIns.setOption(option);

@@ -54,6 +54,7 @@ let chartOption = {
           id: 'node2',
           text: '歌曲2'
         }
+      ]
     }
 };
 // 创建图表实例

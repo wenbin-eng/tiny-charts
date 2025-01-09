@@ -1,7 +1,7 @@
 ```javascript
 import {MindmapChart} from '{{VITE_BASECOPYRIGHTSPAT}}';
 import Node from './Node.vue';
-import '{{VITE_BASECOPYRIGHTSPAT}}/feature/Vue-node.js';
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/Vue-node.js';
 const chartOption = {
     data:  [...],
     render: Node,

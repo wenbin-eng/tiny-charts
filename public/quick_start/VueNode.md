@@ -2,13 +2,13 @@
 引擎支持使用 Vue 组件编写节点，将节点渲染在图表中，同时提供了节点更新和卸载的接口。
 
 ## 1.渲染节点
-用户需要使用 Vue 组件节点时，需要引入`{{VITE_BASECOPYRIGHTSPAT}}/feature/vue-node.js`，这个文件可以解析传入的 Vue 组件并渲染至图表中。
+用户需要使用 Vue 组件节点时，需要引入`{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/vue-node.js`，这个文件可以解析传入的 Vue 组件并渲染至图表中。
 
 ### 创建 Vue 组件节点
 ```javascript
 <template>
   <div class="mindmap-card">
-    <div class="mindmap-top" :style="{ backgroundColor: dynamicBackgroundColor }">
+    <div class="mindmap-top">
       <p>{{ data.text }}</p>
     </div>
     <div class="mindmap-bottom">
@@ -29,18 +29,6 @@ export default {
   props: {
     data: Object,
   },
-  computed: {
-    dynamicBackgroundColor() {
-      if (this.data.id.includes('root')) {
-        return '#2070F3';
-      } else if (this.data.id.includes('researchDept')) {
-        return '#F4840C';
-      } else if (this.data.id.includes('designDept')) {
-        return '#09AA71';
-      }
-      return '#E02128'; // 默认背景颜色
-    }
-  },
   methods: {
     formatText() {
       return `${this.data.peopleNum}/100`
@@ -52,16 +40,39 @@ export default {
 ### 将 Vue 组件渲染至图表中
 将 Vue 组件传递给`option.component`属性，图表会使用data中对应的数据渲染节点。
 ```javascript
+// html片段
+<div id='dom'></div>
+```
+```javascript
+// javascript片段
 // 引用图表库
 import {MindmapChart} from '{{VITE_BASECOPYRIGHTSPAT}}';
 // 引用渲染依赖
-import '{{VITE_BASECOPYRIGHTSPAT}}/feature/vue-node.js'
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/vue-node.js'
 // 引用节点组件
 import Node from './Node.vue';
 
 const option = {
   // 向图表中传入Vue组件，作为节点使用
   component: Node,
+  // 布局配置
+  layout: {
+    type: 'mindmap',
+    direction: 'LR',
+    nodeShape: 'rect',
+    vGap: 10,
+    hGap: 100,
+    bufferRender: true
+  },
+  // 节点配置
+  node: {
+    width: 200,
+    height: 100,
+  },
+  // 连线样式
+  line: {
+    type: 'Bezier'
+  },
   // 图表数据
   data: {
     id: 'root',
@@ -81,6 +92,8 @@ const option = {
     ]
   }
 };
+// 需在节点创建后，才可进行图表的创建
+const chartContainerDom = document.getElementById('dom')
 let chartIns = new MindmapChart();
 chartIns.init(chartContainerDom); 
 chartIns.setOption(option);
