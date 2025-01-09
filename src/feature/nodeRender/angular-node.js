@@ -37,13 +37,13 @@ function isDOM(obj) {
 }
 
 // Angular 框架下的渲染及卸载
-function createAngular(container, componentReturn, data, chartNodeManager) {
+function createAngular(container, componentReturn, data, nodeInstance) {
   if (!ViewContainerRef) {
     throw new Error('Angular is not installed. Please install angular.');
   }
   // 通过 injector 获取 ViewContainerRef 实例
-  const { component, Injector } = componentReturn;
-  const viewContainerRef = Injector.get(ViewContainerRef);
+  const { component, injector } = componentReturn;
+  const viewContainerRef = injector.get(ViewContainerRef);
   // 创建组件实例
   const app = viewContainerRef.createComponent(component);
   // 传递数据
@@ -69,7 +69,7 @@ function createAngular(container, componentReturn, data, chartNodeManager) {
 }
 
 // Angular 组件渲染
-function renderAngularComponent(container, componentFun, data, chartNodeManager) {
+function renderAngularComponent(container, componentFun, data, nodeInstance) {
   // 函数式组件处理
   if (typeof componentFun === 'function') {
     const dom = componentFun(container, data);
@@ -81,7 +81,7 @@ function renderAngularComponent(container, componentFun, data, chartNodeManager)
     // 有返回值 返回Angular组件
     else if (typeof dom === 'object' && dom !== null) {
       if (dom.component && dom.injector && isAngularComponent(dom.component)) {
-        createAngular(container, dom, data, chartNodeManager);
+        createAngular(container, dom, data, nodeInstance);
       } else {
         throw new Error('Provided object does not contain a valid Angular component and injector.');
       }
