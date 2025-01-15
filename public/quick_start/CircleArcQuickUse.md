@@ -15,6 +15,8 @@
 ```javascript
 // 引用图表库
 import { CircleChart } from '{{VITE_BASECOPYRIGHTSPAT}}';
+// 引用渲染依赖
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/vue-node.js';
 // 引用节点组件
 import CircleArcNode from './CircleArcNode.vue';
 const option = {
@@ -25,6 +27,7 @@ const option = {
 		width: 50,
 		height: 50,
 	},
+	component: CircleArcNode,
 	// 图表数据
 	data: {
 		nodes: [{

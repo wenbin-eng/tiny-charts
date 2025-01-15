@@ -15,8 +15,11 @@
 ```javascript
 // 引用图表库
 import { GridChart } from '{{VITE_BASECOPYRIGHTSPAT}}';
+// 引用渲染依赖
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/vue-node.js';
 // 引用节点组件
 import GridNode from './GridNode.vue';
+
 const option = {
 	layout: {
 		type: 'grid',
@@ -25,6 +28,7 @@ const option = {
 		width: 50,
 		height: 50,
 	},
+	component: GridNode,
 	// 图表数据
 	data: {
 		nodes: [{

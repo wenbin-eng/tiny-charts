@@ -13,6 +13,8 @@
 // javascript片段
 // 引用图表库
 import { MindmapChart } from '{{VITE_BASECOPYRIGHTSPAT}}';
+// 引用渲染依赖
+import '{{VITE_BASECOPYRIGHTSPAT}}/feature/nodeRender/vue-node.js';
 // 引用节点组件
 import Node  from './Node.vue';
 const option = {
