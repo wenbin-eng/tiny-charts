@@ -100,7 +100,7 @@ function returnValue(params, iChartOption) {
         // 文本溢出显示
         overflow: 'visible',
         fontSize: Math.max(node.r / 3, 12),
-        fill: '#ffffff' || node.data.textColor, // 设计稿白主题默认白色
+        fill: iChartOption.type !== 'nested' ? '#ffffff' : node.data.textColor, // 设计稿白主题默认白色
         ...textStyle
       },
       // 在非文本溢出显示前提下，鼠标划入时展示省略号的内容
