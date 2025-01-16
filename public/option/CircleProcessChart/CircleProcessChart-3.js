@@ -27,7 +27,6 @@ const option = {
     subtext: '问题IP',
     itemGap: -18,
     textStyle: {
-      textSize: 30,
       fontWeight: 'bold',
       rich: {
         value: {
@@ -44,7 +43,7 @@ const option = {
       }
     },
     subtextStyle: {
-      textSize: 20,
+      fontSize: 20,
       color: '#777777',
     }
   }

@@ -41,7 +41,7 @@ export function setSeries(seriesData, iChartOption) {
     seriesUnit.data = seriesData[i];
     seriesUnit.itemStyle = item.itemStyle || itemStyle;
     seriesUnit.backgroundStyle.color = chartToken.background;
-    if (iChartOption.markLine) seriesUnit.barWidth = iChartOption.barWidth || 16;
+    seriesUnit.barWidth = iChartOption.barWidth || 16;
     series.push(seriesUnit);
   });
   // 阈值线
