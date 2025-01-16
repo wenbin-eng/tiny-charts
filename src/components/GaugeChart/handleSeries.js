@@ -129,7 +129,7 @@ function handleTheme(iChartOption) {
   const { orbitalColor } = iChartOption;
   seriesInit.axisLine.lineStyle.color = [[1, orbitalColor || chartToken.axisLineColor]];
   seriesInit.splitLine.lineStyle.color = chartToken.splitLineColor;
-  seriesInit.axisLabel.color = chartToken.axisLabelColor;
+  seriesInit.axisLabel.color = chartToken.descRichColor;
 }
 
 // 配置仪表盘中心文本
@@ -147,8 +147,8 @@ function handleDetail(seriesUnit, text, data) {
       color: chartToken.detailRichColor,
     },
     name: {
-      fontSize: 14,
-      color: chartToken.detailRichColor,
+      fontSize: 20,
+      color: chartToken.descRichColor,
       padding: [24, 0, 0, 0],
     },
   };
@@ -470,7 +470,7 @@ function handleSeries(iChartOption) {
   if (axisLabelStyle['color']) {
     seriesInit.axisLabel['color'] = axisLabelStyle['color'];
   } else {
-    seriesInit.axisLabel['color'] = chartToken.axisLabelColor;
+    seriesInit.axisLabel['color'] = chartToken.descRichColor;
   }
   seriesInit.axisLabel['distance'] = axisLabelStyle['distance'] || 22;
   seriesInit.axisLabel['fontWeight'] = axisLabelStyle['fontWeight'] || 400;
