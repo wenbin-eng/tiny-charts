@@ -51,6 +51,7 @@ const data = {
         ['silent', '是否关闭hover动效', 'boolean', 'false'],
         ['status', '仪表盘状态', 'string', '无'],
         ['statusText', '仪表盘状态按钮文本', 'string', '无'],
+        ['unit', '仪表盘状态单位', 'string', '无'],
 
     ],
     markdown: [
@@ -78,7 +79,8 @@ const data = {
         orbitalColorMd,
         silentMd,
         statusMd,
-        statusTextMd
+        statusTextMd,
+        unitMd
     ],
 };
 
