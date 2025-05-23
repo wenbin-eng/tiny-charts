@@ -45,7 +45,6 @@ const demoChartArr = [
   'SankeyChart',
   'FunnelChart',
   'HeatMapChart',
-  'BarLineChart'
 ];
 
 NAV_DATA.forEach(v => {
