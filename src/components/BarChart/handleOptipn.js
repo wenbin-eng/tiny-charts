@@ -23,27 +23,65 @@ export function setStack(baseOption, iChartOption, legendData, seriesData) {
     baseOption.series.forEach(item => {
       item.itemStyle.borderWidth = chartToken.borderWidth;
       item.itemStyle.borderColor = chartToken.borderColor;
+      if(iChartOption.stack) {
+        delete item.itemStyle.borderRadius
+      }
     });
     // 柱子圆角，上层数值为空时，圆角递进到下层
     const direction = iChartOption.direction;
-    iChartOption.data.forEach((item, i) => {
-      for (let j = legendData.length - 1; j >= 0; j--) {
-        const name = legendData[j];
-        if (item[name]) {
-          seriesData[name][i] = {
-            value: seriesData[name][i],
-            itemStyle: {
-              borderRadius:
-                direction === 'horizontal'
-                  ? [0, chartToken.borderRadius, chartToken.borderRadius, 0]
-                  : [chartToken.borderRadius, chartToken.borderRadius, 0, 0],
-            },
-          };
-          break;
+    if(iChartOption.stack){
+      let groupLastName = [];
+      const valuesArray = Object.keys(iChartOption.data[0]);
+      Object.keys(iChartOption.stack).forEach(key => {
+        let groupData = iChartOption.stack[key];
+        groupLastName.push(valuesArray[findMaxPositionWithCheck(groupData,valuesArray)]);
+      })
+      iChartOption.data.forEach((item, i) => {
+        groupLastName.forEach(name => {
+          if(item[name]) {
+            seriesData[name][i] = {
+              value: seriesData[name][i],
+              itemStyle: {
+                borderRadius:
+                  direction === 'horizontal'
+                    ? [0, chartToken.borderRadius, chartToken.borderRadius, 0]
+                    : [chartToken.borderRadius, chartToken.borderRadius, 0, 0],
+              },
+            }
+          }
+        })
+      })
+    } else {
+      iChartOption.data.forEach((item, i) => {
+        for (let j = legendData.length - 1; j >= 0; j--) {
+          const name = legendData[j];
+          if (item[name]) {
+            seriesData[name][i] = {
+              value: seriesData[name][i],
+              itemStyle: {
+                borderRadius:
+                  direction === 'horizontal'
+                    ? [0, chartToken.borderRadius, chartToken.borderRadius, 0]
+                    : [chartToken.borderRadius, chartToken.borderRadius, 0, 0],
+              },
+            };
+            break;
+          }
         }
-      }
-    });
+      });
+    }
   }
+}
+
+// 找出第一个数组在第二个数组里面最大的位置
+function findMaxPositionWithCheck(arr1, arr2) {
+  const result = [];
+  
+  arr1.forEach(item => {
+    const pos = arr2.lastIndexOf(item);
+    result.push(pos >=0 ? pos : -1 );
+  })
+  return Math.max(...result);
 }
 
 // 将y轴文本都转为正数
